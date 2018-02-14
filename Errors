@@ -1,0 +1,108 @@
+SWITCH
+
+En general, si fas dues accions seguides, a la segona surt del programa, cosa que NO HAURIA DE PUTU PASSAR
+
+I diràs, doncs fica un while abans del switch i es soluciona, no? HAHÁ, NO. El putu while només fa que totes les opcions entrin en bucle
+
+
+- Case 1
+
+El primer cop funciona
+
+Quan es fa servir per segon cop, surt del programa
+
+
+
+- Case 2
+
+
+Si no s'ha introduit info:
+
+	Funciona
+
+Si s'ha introduit info:
+
+	No ho sé perquè el putu switch nofunciona i surt del programa
+
+
+
+- Case 3
+
+
+Si no s'ha introduit info:
+
+	Funciona
+
+Si s'ha introduit info:
+
+	No ho sé perquè el putu switch nofunciona i surt del programa
+
+
+
+- Case 4
+
+
+Si no s'ha introduit info:
+
+	Funciona
+
+Si s'ha introduit info:
+
+	No ho sé perquè el putu switch nofunciona i surt del programa
+
+
+
+- Case 5
+
+
+Si no s'ha introduit info:
+
+	Funciona
+
+Si s'ha introduit info:
+
+	No ho sé perquè el putu switch nofunciona i surt del programa
+
+
+
+- Case 6
+
+
+Si no s'ha introduit info:
+
+	Funciona
+
+Si s'ha introduit info:
+
+	No ho sé perquè el putu switch nofunciona i surt del programa
+
+
+
+- Case 7
+
+
+Si no s'ha introduit info:
+
+	Funciona
+
+Si s'ha introduit info:
+
+	No ho sé perquè el putu switch nofunciona i surt del programa
+
+
+
+- Case 8
+
+Si no s'ha introduit info:
+
+	Funciona
+
+Si s'ha introduit info:
+
+	No ho sé perquè el putu switch nofunciona i surt del programa
+
+
+
+- Case 9
+
+Si es fa servir com a primera opció, no funciona
