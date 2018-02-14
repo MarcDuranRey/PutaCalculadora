@@ -1,0 +1,102 @@
+using System;
+
+namespace Labdeliverable1
+{
+	// Calculator class
+	public class Calculator
+	{
+		// Private constant to define the maximim size of the arrays storing the calculator operations
+		private const int MAX_MEMORY = 10;
+
+		// Class attributes
+		private char[]	_operations;				// Array storing the operations each of them as chars ('+', '-', '/', '*')
+		private int[]	_operands1;				// Array storing the first operand for an operation
+		private int[]	_operands2;				// Array storing the second operand for an operation
+		private int		_numRecordedOperations;		// Counter of the number of operations introduced
+
+		// Default constructor
+		public Calculator()
+		{
+			// Initialize the class attributes
+		}
+
+		// Public methods of the class
+		public void addOperation(char operation, int operand1, int operand2)
+		{
+			// Add a new operation to the memory of the calculator (arrays) => This method acts like the setter method of our class.
+			// Validate the inpyt data => operation: '+', '-', '*', '/'
+			// This method has to use the method "deleteOperation" just in case the memory of the calculator is full
+		}
+
+		// Private class methods
+		public void deleteOperation(int position)
+		{
+			// Delete the operation in position "position" in the calculator (arrays + counter)
+		}
+
+		public int evalOperation(int operationPos)
+		{
+			// Evaluate the operation stored in the arrays of the class in the position "operationPos"
+			// Validate that "operationPos" is a valid operation position (user can ask for a position with no current operation stored).
+			int result = 0;
+
+			return result;
+		}
+
+		public void printOperation(int operationPos)
+		{
+			// Print the operation info from a given position/order from the recorded operations in the calculator arrays.
+			// Validate "operationPos" is a valid operation position (user can ask for a position with no current operation stored).
+		}
+
+		public void printAllOperations()
+		{
+			// Print all the operations stored in the arrays of the calculator
+			// This method has to use the "printOperation(int operation)" method (call it once for each operation).
+			// If there are no operations stored a message has to be displayed to the user
+		}
+
+		public void printHigherResultOperation()
+		{
+			// Print in the console the operation and operands info with the higher result from the ones stored in the arrays of the calculator
+			// Take into account that there can be less than "MAX_MEMORY" operations introduced => class attribute "_numRecordedOperations"
+			// This public method has to use the public method "evalOperation" method to evaluate each operation stored in the arrays
+		}
+
+		public void printHigherResultOperation(char operationType)
+		{
+			// Print in the console the operation and operands info with the higher result from the ones stored in the arrays of the calculator of type "operationType" (Ex: higher result of '+').
+			// "operationtype" parameter has to be one of the following chars '+', '-', '*' or '/'
+			// Take into account that there can be less than "MAX_MEMORY" operations introduced => class attribute "_numRecordedOperations"
+			// This public method has to use the public method "evalOperation" method to evaluate each operation stored in the arrays
+		}
+
+		public bool anyNegativeOperation()
+		{
+			// Returns true is there is any operation in the memory of the calculator (arrays) which its result is negative
+			// This public method has to use the public method "evalOperation" method to evaluate each operation stored in the arrays
+			bool negativeOperations = false;
+
+			return negativeOperations;
+		}
+	}
+
+
+	// Main class
+	class MainClass
+	{
+		public static void Main (string[] args)
+		{
+			// Main menu options (each calling to a calculator class method)
+			//1. Add operation
+			//2. Delete operation
+			//3. Evaluate operation
+			//4. Print an operation at a given position
+			//5. Print all operations
+			//6. Print operation with highest result
+			//7. Print an specific (+, -, *, /) operation with highest result
+			//8. Any negative values?
+			//9. EXIT
+		}
+	}
+}
