@@ -108,7 +108,7 @@ namespace Labdeliverable1
         public void printOperation(int operationPos)
         {
             // E -> simplement faig que escrigui la operació en la posició donada per l'usuari
-            Console.Write(_operands1[operationPos] + " " + _operations[operationPos] + " " + _operands2[operationPos] + " = " + evalOperation(operationPos));
+            Console.Write("\t" + _operands1[operationPos] + " " + _operations[operationPos] + " " + _operands2[operationPos] + " = " + evalOperation(operationPos));
         }
 
         public void printAllOperations()
@@ -210,324 +210,327 @@ namespace Labdeliverable1
 
             menu = Menu();
 
-            switch (menu)
+            while (menu != 9)
             {
-                case 1:
-                    // E -> opció en la que l'usuari pot afegir una operació a la calculadora
+                switch (menu)
+                {
+                    case 1:
+                        // E -> opció en la que l'usuari pot afegir una operació a la calculadora
                     
-                    // E -> faig que l'usuari afegeixi una operació mitjançant la funció AskAddOperation
-                    if (AskAddOperation(out int operand1, out int operand2, out char operation))
-                    {
-                        calculator.addOperation(operation, operand1, operand2);
-                    }
-                    break;
-
-                case 2:
-                    // E -> opció en que l'usuari pot eliminar una operació d'una posició donada
-
-                    // E -> creo una variable que determina la posició
-                    int position = 0;
-
-                    // E -> primer es comprova que l'usuari hagi introduit alguna operació
-                    if (!VerifyPosition(0, calculator))
-                    {
-                        // E -> ... Si no hi ha operacions, avisa...
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("Sorry, there are no registered operations yet");
-                        Console.ResetColor();
-                    }
-                    else
-                    {
-                            // E -> ... demano la posició de la operació que es vol eliminar
-                            Console.Write("\n\nPlease, introduce the nº of the operation you want to delete (1 for the first, 2 for the second...): ");
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        bool pos = int.TryParse(Console.ReadLine(), out position);
-                        Console.ResetColor();
-
-                        while (!pos)
+                        // E -> faig que l'usuari afegeixi una operació mitjançant la funció AskAddOperation
+                        if (AskAddOperation(out int operand1, out int operand2, out char operation))
                         {
-                            // E -> error, reask
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write("\n\nERROR. That's not a valid option. Try again");
-                            Console.ResetColor();
-
-                            Console.Write("\n\nPlease, introduce the nº of the operation you want to delete (1 for the first, 2 for the second...): ");
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            pos = int.TryParse(Console.ReadLine(), out position);
-                            Console.ResetColor();
+                            calculator.addOperation(operation, operand1, operand2);
                         }
+                        break;
 
-                        // E -> i verifico la posició amb la funció VerifyPosition
-                        while (!VerifyPosition(position, calculator))
+                    case 2:
+                        // E -> opció en que l'usuari pot eliminar una operació d'una posició donada
+
+                        // E -> creo una variable que determina la posició
+                        int position = 0;
+
+                        // E -> primer es comprova que l'usuari hagi introduit alguna operació
+                        if (!VerifyPosition(0, calculator))
                         {
-                            // E -> si la posició està buida, error & try again
+                            // E -> ... Si no hi ha operacions, avisa...
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write("\n\nThere's no operation in that position. Try again");
-                            Console.ResetColor();
-
-                            Console.Write("\n\nPlease, introduce the nº of the operation you want to delete (1 for the first, 2 for the second...): ");
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            pos = int.TryParse(Console.ReadLine(), out position);
-                            Console.ResetColor();
-
-                        }
-
-                        // E -> si la posició és correcta, es crida a deleteOperation per a que elimini la operació
-                        calculator.deleteOperation(position);
-                    }
-                    break;
-
-                case 3:
-
-                    // E -> opció en la que l'usuari pot evaluar (obtindre el resultat de) una operació
-
-                    // E -> primer creo una variable que estableix la posició de l'operació a evaluar
-                    int evaluation;
-
-                    // E -> es comprova que l'usuari hagi introduit alguna operaci´p
-                    if (!VerifyPosition(0, calculator))
-                    {
-                        // E -> ... Si no hi ha operacions, avisa...
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("Sorry, there are no registered operations yet");
-                        Console.ResetColor();
-                    }
-                    else
-                    {
-                        // E -> ... i si n'hi ha...
-
-                        // E -> ...li demano a l'usuari la posició de l'operació
-                    Console.Write("\n\nPlease, select the position to evaluate (1 for the first, 2 for the second...): ");
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    bool eval = int.TryParse(Console.ReadLine(), out evaluation);
-                    Console.ResetColor();
-
-                    // E -> m'asseguro que el valor donat sigui correcte
-                    while (!(eval))
-                    {
-                        // E -> error, reask
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("\n\nERROR. That's not a valid option. Try again");
-                        Console.ResetColor();
-
-                        Console.Write("\n\nPlease, select the position to evaluate (1 for the first, 2 for the second...): ");
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        eval = int.TryParse(Console.ReadLine(), out evaluation);
-                        Console.ResetColor();
-                    }
-
-                    // E -> m'asseguro de que la posició no estigui buida mitjançant la funció VerifyPosition
-                    while (!VerifyPosition(evaluation, calculator))
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("\n\nThere's no operation in that position. Try again");
-                        Console.ResetColor();
-
-                        Console.Write("\n\nPlease, select the position to evaluate (1 for the first, 2 for the second...): ");
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        eval = int.TryParse(Console.ReadLine(), out evaluation);
-                        Console.ResetColor();
-                    }
-
-                    // E -> i envio la posició a ser evaluada
-                    calculator.evalOperation(evaluation);
-                    }
-                    break;
-
-                case 4:
-
-                    // E -> opció en la que l'usuari demana que s'imprimeixi una operació en una posició determinada
-
-                    // E -> primer creo la variable que determinarà la posició
-                    int positionPrint = 0;
-
-                    // E -> es comprova que l'usuari hagi introduit alguna operaci´p
-                    if (!VerifyPosition(0, calculator))
-                    {
-                        // E -> ... Si no hi ha operacions, avisa...
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("Sorry, there are no registered operations yet");
-                        Console.ResetColor();
-                    }
-                    else
-                    {
-                        // E -> ... i si n'hi ha...
-
-                        // E -> demano a l'usuari que introdueixi la posició
-                        Console.Write("\n\nPlease, select the operation to print (1 for the first, 2 for the second...): ");
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        bool posPrint = int.TryParse(Console.ReadLine(), out positionPrint);
-                        Console.ResetColor();
-
-                        // E -> m'asseguro que el valor donat sigui correcte
-                        while(!posPrint)
-                        {
-                            // E -> error, reask
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write("\n\nERROR. That's not a valid option. Try again");
-                            Console.ResetColor();
-
-                            Console.Write("\n\nPlease, select the position to print (1 for the first, 2 for the second...): ");
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            posPrint = int.TryParse(Console.ReadLine(), out evaluation);
-                            Console.ResetColor();
-                        }
-
-                        // E -> m'asseguro de que la posició no estigui buida
-                        while (!VerifyPosition(positionPrint, calculator))
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write("\n\nThere's no operation in that position. Try again");
-                            Console.ResetColor();
-
-                            Console.Write("\n\nPlease, select the position to print (1 for the first, 2 for the second...): ");
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            int.TryParse(Console.ReadLine(), out positionPrint);
-                            Console.ResetColor();
-                        }
-
-                        // E -> i faig que imprimeixi la operació
-                        calculator.printOperation(positionPrint);
-                    }
-                    break;
-
-                case 5:
-
-                    // E -> opció que permet a l'usuari veure totes les operacions
-
-                    // E -> comprovo que hi hagi operacions registrades (comprovant que com a mínim hi ha una operació registrada)...
-                    if (!VerifyPosition(0, calculator))
-                    {
-                        // E -> ...Si no hi ha, s'avisa
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("\n\nSorry, there are no registered operations yet");
-                        Console.ResetColor();
-                    }
-                    else
-                    {
-                        // E -> ...si hi ha, imprimeix
-                        Console.WriteLine("\n\nHere they are: \n");
-                        Console.ForegroundColor = ConsoleColor.DarkCyan;
-                        calculator.printAllOperations();
-                        Console.ResetColor();
-                    }
-                    break;
-
-                case 6:
-
-                    // E -> opció que permet a l'usuari veure l'operació amb el resultat més alt
-
-                    // E -> comprovo que hi hagi operacions registrades (comprovant que com a mínim hi ha una operació regisrada)...
-                    if (!VerifyPosition(0, calculator))
-                    {
-                        // E -> ...Si no hi ha, s'avisa
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("Sorry, there are no registered operations yet");
-                        Console.ResetColor();
-                    }
-                    else
-                    {
-                        // E -> ...si hi ha, imprimeix
-                        Console.WriteLine("Here it is: \n\n");
-                        Console.ForegroundColor = ConsoleColor.DarkCyan;
-                        Console.Write("\t\t");
-                        calculator.printHigherResultOperation();
-                        Console.ResetColor();
-                    }
-                    break;
-
-                case 7:
-
-                    // E -> opcioó que permet a l'usuari veure la operació amb el resultat més alt d'un signe concret (+, -, *, /)
-
-                    // E -> primer declaro la variable que definira el signe
-                    char sign;
-
-                    // E -> es comprova que l'usuari hagi introduit alguna operaci´p
-                    if (!VerifyPosition(0, calculator))
-                    {
-                        // E -> ... Si no hi ha operacions, avisa...
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("Sorry, there are no registered operations yet");
-                        Console.ResetColor();
-                    }
-                    else
-                    {
-                        // E -> ... i si n'hi ha...
-
-                        // E -> es demana la operació...
-                        Console.Write("Please, introduce the operation (+, -, *, /): ");
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        sign = Convert.ToChar(Console.ReadLine());
-                        Console.ResetColor();
-
-
-                        // E -> comprova que estigui bé...
-                        while (!(sign == '+' || sign == '-' || sign == '*' || sign == '/'))
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write("\n\nThere's no operation with that sign. Try again");
-                            Console.ResetColor();
-
-                            Console.Write("Please, introduce the operation (+, -, *, /): ");
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            sign = Convert.ToChar(Console.ReadLine());
-                            Console.ResetColor();
-                        }
-
-                        // E -> ... i després la printeja
-                        Console.Write("\n\nHere it is: \n\n");
-                        Console.ForegroundColor = ConsoleColor.DarkCyan;
-                        Console.Write("\t\t");
-                        calculator.printHigherResultOperation(sign);
-                        Console.ResetColor();
-                    }
-                    break;
-
-                case 8:
-
-                    // E -> oopció que permet a l'usuari saber si alguna operació ha donat un resultat negatiu
-
-                    if (!VerifyPosition(0, calculator))
-                    {
-                        // E -> ... Si no hi ha operacions, avisa...
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("Sorry, there are no registered operations yet");
-                        Console.ResetColor();
-                    }
-                    else
-                    {
-                        // E -> ... i si n'hi ha, fa saber si alguna és negativa
-                        if (calculator.anyNegativeOperation())
-                        {
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write("\n\nYes, there are operation with negative results");
+                            Console.Write("Sorry, there are no registered operations yet");
                             Console.ResetColor();
                         }
                         else
                         {
+                                // E -> ... demano la posició de la operació que es vol eliminar
+                                Console.Write("\n\nPlease, introduce the nº of the operation you want to delete (1 for the first, 2 for the second...): ");
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            bool pos = int.TryParse(Console.ReadLine(), out position);
+                            Console.ResetColor();
+
+                            while (!pos)
+                            {
+                                // E -> error, reask
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write("\n\nERROR. That's not a valid option. Try again");
+                                Console.ResetColor();
+
+                                Console.Write("\n\nPlease, introduce the nº of the operation you want to delete (1 for the first, 2 for the second...): ");
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                pos = int.TryParse(Console.ReadLine(), out position);
+                                Console.ResetColor();
+                            }
+
+                            // E -> i verifico la posició amb la funció VerifyPosition
+                            while (!VerifyPosition(position, calculator))
+                            {
+                                // E -> si la posició està buida, error & try again
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write("\n\nThere's no operation in that position. Try again");
+                                Console.ResetColor();
+
+                                Console.Write("\n\nPlease, introduce the nº of the operation you want to delete (1 for the first, 2 for the second...): ");
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                pos = int.TryParse(Console.ReadLine(), out position);
+                                Console.ResetColor();
+
+                            }
+
+                            // E -> si la posició és correcta, es crida a deleteOperation per a que elimini la operació
+                            calculator.deleteOperation(position);
+                        }
+                        break;
+
+                    case 3:
+
+                        // E -> opció en la que l'usuari pot evaluar (obtindre el resultat de) una operació
+
+                        // E -> primer creo una variable que estableix la posició de l'operació a evaluar
+                        int evaluation;
+
+                        // E -> es comprova que l'usuari hagi introduit alguna operaci´p
+                        if (!VerifyPosition(0, calculator))
+                        {
+                            // E -> ... Si no hi ha operacions, avisa...
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write("\n\nSorry, any of the operation has a negative result");
+                            Console.Write("Sorry, there are no registered operations yet");
                             Console.ResetColor();
                         }
-                    }
-                    break;
+                        else
+                        {
+                            // E -> ... i si n'hi ha...
 
-                case 9:
+                            // E -> ...li demano a l'usuari la posició de l'operació
+                        Console.Write("\n\nPlease, select the position to evaluate (1 for the first, 2 for the second...): ");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        bool eval = int.TryParse(Console.ReadLine(), out evaluation);
+                        Console.ResetColor();
 
-                    // E -> opció que permet a l'usuari sortir del programa
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write("\n\nThanks for checking in!");
-                    Console.ResetColor();
-                    Console.ReadKey();
-                    break;
-            }
+                        // E -> m'asseguro que el valor donat sigui correcte
+                        while (!(eval))
+                        {
+                            // E -> error, reask
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("\n\nERROR. That's not a valid option. Try again");
+                            Console.ResetColor();
+
+                            Console.Write("\n\nPlease, select the position to evaluate (1 for the first, 2 for the second...): ");
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            eval = int.TryParse(Console.ReadLine(), out evaluation);
+                            Console.ResetColor();
+                        }
+
+                        // E -> m'asseguro de que la posició no estigui buida mitjançant la funció VerifyPosition
+                        while (!VerifyPosition(evaluation, calculator))
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("\n\nThere's no operation in that position. Try again");
+                            Console.ResetColor();
+
+                            Console.Write("\n\nPlease, select the position to evaluate (1 for the first, 2 for the second...): ");
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            eval = int.TryParse(Console.ReadLine(), out evaluation);
+                            Console.ResetColor();
+                        }
+
+                        // E -> i envio la posició a ser evaluada
+                        calculator.evalOperation(evaluation);
+                        }
+                        break;
+
+                    case 4:
+
+                        // E -> opció en la que l'usuari demana que s'imprimeixi una operació en una posició determinada
+
+                        // E -> primer creo la variable que determinarà la posició
+                        int positionPrint = 0;
+
+                        // E -> es comprova que l'usuari hagi introduit alguna operaci´p
+                        if (!VerifyPosition(0, calculator))
+                        {
+                            // E -> ... Si no hi ha operacions, avisa...
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("Sorry, there are no registered operations yet");
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            // E -> ... i si n'hi ha...
+
+                            // E -> demano a l'usuari que introdueixi la posició
+                            Console.Write("\n\nPlease, select the operation to print (1 for the first, 2 for the second...): ");
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            bool posPrint = int.TryParse(Console.ReadLine(), out positionPrint);
+                            Console.ResetColor();
+
+                            // E -> m'asseguro que el valor donat sigui correcte
+                            while(!posPrint)
+                            {
+                                // E -> error, reask
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write("\n\nERROR. That's not a valid option. Try again");
+                                Console.ResetColor();
+
+                                Console.Write("\n\nPlease, select the position to print (1 for the first, 2 for the second...): ");
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                posPrint = int.TryParse(Console.ReadLine(), out evaluation);
+                                Console.ResetColor();
+                            }
+
+                            // E -> m'asseguro de que la posició no estigui buida
+                            while (!VerifyPosition(positionPrint, calculator))
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write("\n\nThere's no operation in that position. Try again");
+                                Console.ResetColor();
+
+                                Console.Write("\n\nPlease, select the position to print (1 for the first, 2 for the second...): ");
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                int.TryParse(Console.ReadLine(), out positionPrint);
+                                Console.ResetColor();
+                            }
+
+                            // E -> i faig que imprimeixi la operació
+                            calculator.printOperation(positionPrint);
+                        }
+                        break;
+
+                    case 5:
+
+                        // E -> opció que permet a l'usuari veure totes les operacions
+
+                        // E -> comprovo que hi hagi operacions registrades (comprovant que com a mínim hi ha una operació registrada)...
+                        if (!VerifyPosition(0, calculator))
+                        {
+                            // E -> ...Si no hi ha, s'avisa
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("\n\nSorry, there are no registered operations yet");
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            // E -> ...si hi ha, imprimeix
+                            Console.WriteLine("\n\nHere they are: \n");
+                            Console.ForegroundColor = ConsoleColor.DarkCyan;
+                            calculator.printAllOperations();
+                            Console.ResetColor();
+                        }
+                        break;
+
+                    case 6:
+
+                        // E -> opció que permet a l'usuari veure l'operació amb el resultat més alt
+
+                        // E -> comprovo que hi hagi operacions registrades (comprovant que com a mínim hi ha una operació regisrada)...
+                        if (!VerifyPosition(0, calculator))
+                        {
+                            // E -> ...Si no hi ha, s'avisa
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("Sorry, there are no registered operations yet");
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            // E -> ...si hi ha, imprimeix
+                            Console.WriteLine("Here it is: \n\n");
+                            Console.ForegroundColor = ConsoleColor.DarkCyan;
+                            Console.Write("\t\t");
+                            calculator.printHigherResultOperation();
+                            Console.ResetColor();
+                        }
+                        break;
+
+                    case 7:
+
+                        // E -> opcioó que permet a l'usuari veure la operació amb el resultat més alt d'un signe concret (+, -, *, /)
+
+                        // E -> primer declaro la variable que definira el signe
+                        char sign;
+
+                        // E -> es comprova que l'usuari hagi introduit alguna operaci´p
+                        if (!VerifyPosition(0, calculator))
+                        {
+                            // E -> ... Si no hi ha operacions, avisa...
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("Sorry, there are no registered operations yet");
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            // E -> ... i si n'hi ha...
+
+                            // E -> es demana la operació...
+                            Console.Write("Please, introduce the operation (+, -, *, /): ");
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            sign = Convert.ToChar(Console.ReadLine());
+                            Console.ResetColor();
+
+
+                            // E -> comprova que estigui bé...
+                            while (!(sign == '+' || sign == '-' || sign == '*' || sign == '/'))
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write("\n\nThere's no operation with that sign. Try again");
+                                Console.ResetColor();
+
+                                Console.Write("Please, introduce the operation (+, -, *, /): ");
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                sign = Convert.ToChar(Console.ReadLine());
+                                Console.ResetColor();
+                            }
+
+                            // E -> ... i després la printeja
+                            Console.Write("\n\nHere it is: \n\n");
+                            Console.ForegroundColor = ConsoleColor.DarkCyan;
+                            Console.Write("\t\t");
+                            calculator.printHigherResultOperation(sign);
+                            Console.ResetColor();
+                        }
+                        break;
+
+                    case 8:
+
+                        // E -> oopció que permet a l'usuari saber si alguna operació ha donat un resultat negatiu
+
+                        if (!VerifyPosition(0, calculator))
+                        {
+                            // E -> ... Si no hi ha operacions, avisa...
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("Sorry, there are no registered operations yet");
+                            Console.ResetColor();
+                        }
+                        else
+                        {
+                            // E -> ... i si n'hi ha, fa saber si alguna és negativa
+                            if (calculator.anyNegativeOperation())
+                            {
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.Write("\n\nYes, there are operation with negative results");
+                                Console.ResetColor();
+                            }
+                            else
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.Write("\n\nSorry, any of the operation has a negative result");
+                                Console.ResetColor();
+                            }
+                        }
+                        break;
+
+                    case 9:
+
+                        // E -> opció que permet a l'usuari sortir del programa
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write("\n\nThanks for checking in!");
+                        Console.ResetColor();
+                        Console.ReadKey();
+                        break;
+                }
 
             // E -> amb això fem que el menu torni a aparèixer
             PressAnyKeyToContinue();
             Console.Clear();
             menu = Menu();
+            }
         }
 
         public static int Menu()
@@ -574,7 +577,6 @@ namespace Labdeliverable1
             }
 
             // E -> i aquí retorna el valor de l'opció escollida per l'usuari
-            Console.Write("\n\n");
             PressAnyKeyToContinue();
             Console.Clear();
             return option;
@@ -625,7 +627,7 @@ namespace Labdeliverable1
         public static bool VerifyPosition(int operation, Calculator cal)
         {
             // E -> hem de comprobar que la posició que ens donguin no estigui buida. Per a fer-ho, hem de mirar si la posició donada és < _numRecordedOperations
-            if (operation - 1 < cal._getRecordedOperations)
+            if (cal._getRecordedOperations < 0)
             {
                 return false;
             }
